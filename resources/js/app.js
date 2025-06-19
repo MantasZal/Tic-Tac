@@ -2,7 +2,7 @@ import $ from "jquery";
 window.$ = $;
 window.jQuery = $;
 import "./bootstrap";
-import { saveBoardState, ai_respons, checkGameOver } from "./functions";
+import { saveBoardState } from "./functions";
 let aiActive = true; // AI is allowed to run by default
 
 let playerName = playerNameFromServer;
@@ -44,9 +44,50 @@ $(document).ready(function () {
         if (starter === "ai") {
             aiSymbol = "X";
             current = "O";
-
-            ai_respons(board, aiSymbol, gameOver, current, aiActive);
             playermove = true;
+            const index = 0;
+            const userId = document.querySelector("div.py-12").dataset.userId;
+            $.ajax({
+                url: "/game-logic",
+                method: "POST",
+                data: {
+                    index: index,
+                    current: current,
+                    gameOver: gameOver,
+                    aisymbol: aiSymbol,
+                    playerNameFromServer: playerName,
+                    id: userId,
+                    // board: board,
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content",
+                    ),
+                },
+                success: function (response) {
+                    // if (!response.valid) {
+                    //     alert("The place is occupied ");
+                    // }
+                    $("#status").prepend(`<div>${response.message} </div>`);
+                    $(".grid button").each(function (index) {
+                        $(this).text(board[index]);
+                    });
+                    board = response.board;
+                    $(".grid button").each(function (index) {
+                        $(this).text(board[index]);
+                    });
+                    if (response.gameOver) {
+                        aiActive = false;
+                        alert("The winner is " + response.winner);
+                        alert("Your new rank is  " + response.new_rank);
+                    }
+
+                    gameOver = response.gameOver;
+                },
+                error: function (xhr) {
+                    alert("Error updating rank.");
+                },
+            });
         } else {
             current = "X";
             aiSymbol = "O";
@@ -70,33 +111,51 @@ $(document).ready(function () {
         }, 200);
         saveBoardState(gameOver, board, current);
     });
+    alert(aiSymbol);
     $(".grid button").click(function () {
-        if (playermove) {
-            var index = $(".grid button").index(this);
-        }
+        if (!playermove) return;
 
-        if (board[index] !== "" || gameOver) return;
+        const index = $(".grid button").index(this);
+        const userId = document.querySelector("div.py-12").dataset.userId;
+        $.ajax({
+            url: "/game-logic",
+            method: "POST",
+            data: {
+                index: index,
+                current: current,
+                gameOver: gameOver,
+                aisymbol: aiSymbol,
+                playerNameFromServer: playerName,
+                id: userId,
+                // board: board,
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                // if (!response.valid) {
+                //     alert("The place is occupied ");
+                // }
+                $("#status").prepend(`<div>${response.message} </div>`);
+                $(".grid button").each(function (index) {
+                    $(this).text(board[index]);
+                });
+                board = response.board;
+                $(".grid button").each(function (index) {
+                    $(this).text(board[index]);
+                });
+                if (response.gameOver) {
+                    aiActive = false;
+                    alert("The winner is " + response.winner);
+                    alert("Your new rank is  " + response.new_rank);
+                }
 
-        $(this).text(current);
-        board[index] = current;
-
-        $("#status").prepend(
-            "<div>Player " +
-                currentname +
-                " placed at position " +
-                (index + 1) +
-                "</div>",
-        );
-        gameOver = checkGameOver(board, gameOver, aiSymbol);
-        if (gameOver) {
-            aiActive = false;
-        }
-        if (!gameOver) {
-            ai_respons(board, aiSymbol, gameOver, current, aiActive);
-            playermove = true;
-        }
-
-        saveBoardState(gameOver, board, current);
+                gameOver = response.gameOver;
+            },
+            error: function (xhr) {
+                alert("Error updating rank.");
+            },
+        });
     });
 });
 // Alpine Logic
