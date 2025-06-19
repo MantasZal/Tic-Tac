@@ -1,0 +1,15 @@
+[90m= [39m[34;4mApp\Models\User[39;24m {#6547
+    [34mid[39m: [35m1[39m,
+    [34mname[39m: "[32mJonas[39m",
+    [34memail[39m: "[32mjonas@gmail.com[39m",
+    #[33mrank[39m: [35m10[39m,
+    [34memail_verified_at[39m: [36mnull[39m,
+    #[33mpassword[39m: "[32m$2y$12$6aKgM1HWKU1b8xuZRKGWp.a/Fl8qzZ0QP2aIreB.w8nVgOMrCmWYi[39m",
+    #[33mremember_token[39m: "[32mnDp0hZa1AgcRuQUW8tztejeWYgnv6JVWfSnTcjZl6ra0iZfzpyWrwvyfrf1U[39m",
+    [34mcurrent_team_id[39m: [36mnull[39m,
+    [34mprofile_photo_path[39m: [36mnull[39m,
+    [34mcreated_at[39m: "[32m2025-06-09 10:43:39[39m",
+    [34mupdated_at[39m: "[32m2025-06-10 11:51:46[39m",
+    +[1mprofile_photo_url[22m: "[32mhttps://ui-avatars.com/api/?name=J&color=7F9CF5&background=EBF4FF[39m",
+  }
+
