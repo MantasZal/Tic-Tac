@@ -1,28 +1,39 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PlayerController;
-use App\Http\Controllers\OpenAIController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\AchievementsController;
-use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\PlayerController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
 
     Route::view('add', 'dashboard');
-    Route::post('add', [PlayerController::class, 'dashboard']);
-    Route::post('/ai-move', [OpenAIController::class, 'aiMove']);
-    // Route::post('/users-rank', [UserController::class, 'update']);
-    Route::get('/leaderboard', [LeaderboardController::class, 'getLeaderBoard'])->name('leaderboard');
-    Route::get('/achievements', [AchievementsController::class, 'index'])->name('achievements');
-    Route::get('/awardAchievement', [AchievementsController::class, 'awardAchievement'])->name('awardAchievement');
-    Route::post('/game-result', [LeaderboardController::class, 'storeResult']);
-    Route::get('/', [PlayerController::class, 'index'])->name('dashboard');
-    Route::get('/api/dashboard', [DashboardController::class, 'index'])->name('api.dashboard');
-    Route::post('/validate-move', [GameController::class, 'validateMove']);
-    Route::post('/check-game-over', [GameController::class, 'checkGameOver']);
-    Route::post('/update-rank', [GameController::class, 'updateRank']);
-    Route::post('/game-logic', [GameController::class, 'gamelogic']);
+
+    Route::controller(GameController::class)->group(function () {
+        Route::post('/game-logic', 'gamelogic');
+        Route::post('/startGame', 'startGame');
+    });
+
+    Route::controller(DashboardController::class)->group(function () {
+        Route::post('save_game_results', 'save_game_results');
+        Route::get('/api/dashboard', 'index')->name('api.dashboard');
+    });
+
+    Route::controller(PlayerController::class)->group(function () {
+        Route::get('/{game_id?}', 'index')->name('dashboard');
+        Route::post('add', 'dashboard');
+        Route::post('/save_game_id', 'save_game_id');
+    });
+
+    Route::controller(LeaderboardController::class)->group(function () {
+        Route::get('/leaderboard', 'getLeaderBoard')->name('leaderboard');
+        Route::post('/game-result', 'storeResult');
+    });
+
+    Route::controller(AchievementsController::class)->group(function () {
+        Route::get('/awardAchievement', 'awardAchievement')->name('awardAchievement');
+        Route::get('/achievements', 'index')->name('achievements');
+    });
 });

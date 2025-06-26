@@ -16,6 +16,7 @@
         const boardFromServer = {!! json_encode($data ?? array_fill(0, 9, "")) !!};
         const playerFromServer = {!! json_encode($lastplayer ?? "X") !!};
         const playerNameFromServer = @json(auth()->check() ? auth()->user()->name : 'Guest');
+        const game_idFromServer = {{ $game_id ?? 0 }};
     </script>
 
     {{-- CSRF Token --}}
@@ -31,9 +32,15 @@
                 <div class="text-center mb-4 hidden sm:block">
                     <label for="starter">Who starts first?</label>
                     <select id="starter" class="ml-2 p-1 w-36 border rounded">
-                        <option value="human" selected>Human</option>
+                        <option value="human" selected>You</option>
                         <option value="ai">AI</option>
                     </select>
+
+                    @if (!$gameOver)
+                        <div id="continue-wrapper" class="text-center mt-4">
+                            <button id="continueGame" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Continue</button>
+                        </div>
+                    @endif
 
                     <label for="difficulty" class="ml-4">Difficulty:</label>
                     <select id="difficulty" class="ml-2 p-1 w-36 border rounded">
@@ -46,6 +53,13 @@
                 </div>
                 {{-- Mobile Game Settings Modal --}}
                 <div x-data="{ showGameSettings: false }" x-cloak>
+                        @if (!$gameOver)
+                            <div id="continue-wrapper-mobile" class="text-center mt-4 sm:hidden">
+                                <button id="continueGameMobile" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 w-full">
+                                    Continue
+                                </button>
+                            </div>
+                        @endif
                     <!-- Mobile Button to Open Modal -->
                     <div class=" inset-x-0 flex justify-center sm:hidden z-50 pointer-events-none">
                         <div class="pointer-events-auto">
@@ -67,7 +81,7 @@
                             <div class="mb-4">
                                 <label for="mobile-starter" class="block font-medium mb-1">Who starts first?</label>
                                 <select id="mobile-starter" class="w-full p-2 border rounded">
-                                    <option value="human" selected>Human</option>
+                                    <option value="human" selected>You</option>
                                     <option value="ai">AI</option>
                                 </select>
                             </div>
