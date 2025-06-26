@@ -10,5 +10,6 @@ class GameResult extends Model
     {
         return $this->hasMany(GameResult::class);
     }
+
     protected $fillable = ['user_id', 'won', 'new_achievements'];
 }

@@ -1,19 +1,16 @@
 <?php
 
-
-
 namespace App;
 
-use Illuminate\Support\Facades\Log;
+use App\Enums\SymbolEnum;
 use App\Models\Player;
+use Illuminate\Support\Facades\Log;
 
 class Game
 {
-    public static function checkGameOver($aiSymbol, $playerName): array
+    public static function checkGameOver(SymbolEnum $aiSymbol, string $playerName, int $game_id): array
     {
-        $board = json_decode(Player::latest('id')->first()->data);
-
-
+        $board = json_decode(Player::where('game_id', $game_id)->latest()->first()->data);
 
         $wins = [
             [0, 1, 2],
@@ -30,7 +27,6 @@ class Game
             if ($board[$a] && $board[$a] === $board[$b] && $board[$a] === $board[$c]) {
                 $symbol = $board[$a];
                 $winner = $symbol === $aiSymbol ? 'AI' : $playerName;
-                Log::info('Board is:', ['winner' => $winner]);
 
                 return [
                     'gameOver' => true,
@@ -40,7 +36,7 @@ class Game
             }
         }
 
-        if (!in_array('', $board)) {
+        if (! in_array('', $board)) {
             return [
                 'gameOver' => true,
                 'winner' => null,
@@ -54,15 +50,18 @@ class Game
             'isDraw' => false,
         ];
     }
-    public static function savingboard($gameOver, $board, $playerSymbol)
+
+    public static function savingBoard(bool $gameOver, array $board, SymbolEnum $playerSymbol): Player
     {
-        $gameOver = $gameOver ? 1 : 0;
+        // $gameOver = $gameOver ? 1 : 0;
         $jsonBoard = json_encode($board);
 
         $player = new Player;
         $player->gameOver = $gameOver;
         $player->data = $jsonBoard;
-        $player->player = $playerSymbol;
+        $player->player = $playerSymbol->value;
         $player->save();
+
+        return $player;
     }
 }

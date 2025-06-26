@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SaveGame;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    public function save_game_results(Request $req)
+    {
+
+        $SaveGame = new SaveGame;
+        $SaveGame->user_id = $req->playerID;
+        $SaveGame->won = $req->won;
+
+        $SaveGame->save();
+    }
+
     public function index()
     {
         $user = Auth::user();
@@ -22,7 +32,7 @@ class DashboardController extends Controller
         $decodedAchievements = $newAchievements ? json_decode($newAchievements, true) : [];
 
         return response()->json([
-            'lastAchievement' =>  $decodedAchievements
+            'lastAchievement' => $decodedAchievements,
         ]);
     }
 }

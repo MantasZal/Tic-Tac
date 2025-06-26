@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Achievement;
+use Illuminate\Database\Seeder;
 
 class AchievementSeeder extends Seeder
 {
@@ -16,7 +16,6 @@ class AchievementSeeder extends Seeder
             ['title' => 'Win 3 games in a row', 'description' => 'Win 3 consecutive games', 'icon' => 'fa-fire'],
             ['title' => 'Lose 5 times', 'description' => 'Lose 5 games', 'icon' => 'fa-skull-crossbones'],
         ];
-
 
         foreach ($achievements as $achievement) {
             Achievement::create($achievement);

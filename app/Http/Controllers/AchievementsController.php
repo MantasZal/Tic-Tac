@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Achievement;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AchievementsController extends Controller
 {
-
     public function index()
     {
         $user = Auth::user();
 
-        if (!$user) {
+        if (! $user) {
             abort(403, 'Unauthorized');
         }
 
@@ -28,6 +27,7 @@ class AchievementsController extends Controller
             'LockedAchievements' => $LockedAchievements, // now this is "not yet achieved"
         ]);
     }
+
     public function awardAchievement(Request $request)
     {
         $achievementId = $request->input('achievement_id');

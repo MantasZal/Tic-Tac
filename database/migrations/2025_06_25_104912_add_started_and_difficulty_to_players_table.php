@@ -9,14 +9,11 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('players', function (Blueprint $table) {
-            $table->id();
-            $table->text('player');
-            $table->json('data');
-            $table->boolean('gameOver')->default(false);
-            $table->timestamps();
+        Schema::table('players', function (Blueprint $table) {
+            $table->string('started')->nullable();     // or after any relevant column
+            $table->string('difficulty')->nullable();
         });
     }
 
@@ -25,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('player');
+        Schema::table('players', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Models\GameResult;
 use App\Models\User;
-
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LeaderboardController extends Controller
 {
@@ -23,6 +21,7 @@ class LeaderboardController extends Controller
             'last_achievement' => $request->input('achievement') ?? null,
         ]);
     }
+
     public function index()
     {
         return view('leaderboard');

@@ -12,15 +12,8 @@ class AchievementObserver
      */
     public function created(Achievement $achievement): void
     {
-        // ✅ Example 1: Log a message
-        Log::info('New achievement created: ' . $achievement->title);
 
-        // ✅ Example 2: Send a notification (optional)
-        // Notification::route('mail', 'admin@example.com')
-        //     ->notify(new AchievementCreatedNotification($achievement));
-
-        // ✅ Example 3: Broadcast a real-time event (optional)
-        // event(new NewAchievementCreated($achievement));
+        Log::info('New achievement created: '.$achievement->title);
     }
 
     /**

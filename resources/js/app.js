@@ -2,12 +2,13 @@ import $ from "jquery";
 window.$ = $;
 window.jQuery = $;
 import "./bootstrap";
-import { saveBoardState } from "./functions";
+import { saveBoardState, sendGameLogicRequest } from "./functions";
 let aiActive = true; // AI is allowed to run by default
 
 let playerName = playerNameFromServer;
 let currentname = playerName;
 var playermove;
+var game_id = game_idFromServer;
 
 $("#reset").click(function () {
     aiActive = false;
@@ -29,7 +30,43 @@ $(document).ready(function () {
         var board = JSON.parse(boardFromServer); // initialize from PHP
         var gameOver = 0;
     }
+    $("#continueGame, #continueGameMobile").click(function () {
+        // Restore the previous board state
+        $(".grid button").each(function (index) {
+            $(this).text(board[index]);
+        });
+        $(".grid button").prop("disabled", false);
+        aiActive = true;
+        playermove = true;
+
+        // Remove both Continue buttons from DOM
+        $("#continue-wrapper").remove();
+        $("#continue-wrapper-mobile").remove();
+    });
+
     $("#startGame").click(function () {
+        const starter = $("#starter").val();
+        const difficulty = $("#difficulty").val();
+        $.ajax({
+            url: "/startGame",
+            method: "POST",
+            data: {
+                starter: starter,
+                difficulty: difficulty,
+            },
+            success: function (response) {
+                // Redirect to the new game URL using the returned game_id
+                window.location.href = `/${response.game_id}`;
+                console.log("Game started:", response);
+            },
+            error: function (xhr) {
+                console.error("Error starting the game:", xhr.responseText);
+            },
+        });
+        // window.location.href = `/${game_id}`;
+
+        $(".grid button").prop("disabled", false);
+        $("#startGame").prop("disabled", true);
         playermove = false;
         aiActive = false;
         $(".grid button").text("");
@@ -39,60 +76,34 @@ $(document).ready(function () {
         setTimeout(() => {
             aiActive = true;
         }, 200);
-        saveBoardState(gameOver, board, current);
-        const starter = $("#starter").val();
+
+        saveBoardState(gameOver, board, current, game_id);
+
         if (starter === "ai") {
             aiSymbol = "X";
             current = "O";
             playermove = true;
             const index = 0;
             const userId = document.querySelector("div.py-12").dataset.userId;
-            $.ajax({
-                url: "/game-logic",
-                method: "POST",
-                data: {
-                    index: index,
-                    current: current,
-                    gameOver: gameOver,
-                    aisymbol: aiSymbol,
-                    playerNameFromServer: playerName,
-                    id: userId,
-                    // board: board,
-                },
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                        "content",
-                    ),
-                },
-                success: function (response) {
-                    // if (!response.valid) {
-                    //     alert("The place is occupied ");
-                    // }
-                    $("#status").prepend(`<div>${response.message} </div>`);
-                    $(".grid button").each(function (index) {
-                        $(this).text(board[index]);
-                    });
-                    board = response.board;
-                    $(".grid button").each(function (index) {
-                        $(this).text(board[index]);
-                    });
-                    if (response.gameOver) {
-                        aiActive = false;
-                        alert("The winner is " + response.winner);
-                        alert("Your new rank is  " + response.new_rank);
-                    }
-
-                    gameOver = response.gameOver;
-                },
-                error: function (xhr) {
-                    alert("Error updating rank.");
-                },
+            sendGameLogicRequest({
+                index,
+                current,
+                gameOver,
+                aiSymbol,
+                playerName,
+                userId,
+                board,
+                aiActive,
+                game_id,
             });
+            $("#startGame").prop("disabled", false);
         } else {
             current = "X";
             aiSymbol = "O";
             playermove = true;
+            $("#startGame").prop("disabled", false);
         }
+        $("#continue-wrapper").remove();
     });
 
     $(".grid button").each(function (index) {
@@ -109,52 +120,25 @@ $(document).ready(function () {
         setTimeout(() => {
             aiActive = true;
         }, 200);
-        saveBoardState(gameOver, board, current);
+        $("#status").empty();
+        saveBoardState(gameOver, board, current, game_id);
+        $("#continue-wrapper").remove();
     });
-    alert(aiSymbol);
     $(".grid button").click(function () {
         if (!playermove) return;
 
         const index = $(".grid button").index(this);
         const userId = document.querySelector("div.py-12").dataset.userId;
-        $.ajax({
-            url: "/game-logic",
-            method: "POST",
-            data: {
-                index: index,
-                current: current,
-                gameOver: gameOver,
-                aisymbol: aiSymbol,
-                playerNameFromServer: playerName,
-                id: userId,
-                // board: board,
-            },
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function (response) {
-                // if (!response.valid) {
-                //     alert("The place is occupied ");
-                // }
-                $("#status").prepend(`<div>${response.message} </div>`);
-                $(".grid button").each(function (index) {
-                    $(this).text(board[index]);
-                });
-                board = response.board;
-                $(".grid button").each(function (index) {
-                    $(this).text(board[index]);
-                });
-                if (response.gameOver) {
-                    aiActive = false;
-                    alert("The winner is " + response.winner);
-                    alert("Your new rank is  " + response.new_rank);
-                }
-
-                gameOver = response.gameOver;
-            },
-            error: function (xhr) {
-                alert("Error updating rank.");
-            },
+        sendGameLogicRequest({
+            index,
+            current,
+            gameOver,
+            aiSymbol,
+            playerName,
+            userId,
+            board,
+            aiActive,
+            game_id,
         });
     });
 });

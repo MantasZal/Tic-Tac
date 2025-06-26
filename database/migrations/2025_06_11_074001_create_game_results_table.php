@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->boolean('won'); // true = win, false = lose
-            $table->string('new_acievements')->nullable();;
+            $table->string('new_acievements')->nullable();
             $table->timestamps();
         });
     }

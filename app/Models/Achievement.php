@@ -6,8 +6,6 @@ use App\Observers\AchievementObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Models\User;
-
 
 #[ObservedBy([AchievementObserver::class])]
 class Achievement extends Model

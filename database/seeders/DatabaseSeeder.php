@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Player;
-
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         player::create([
-            'data' => json_encode(["", "", "", "", "", "", "", "", ""]), // empty board
+            'data' => json_encode(['', '', '', '', '', '', '', '', '']), // empty board
             'player' => 'X',
             'gameOver' => false,
         ]);

@@ -2,13 +2,11 @@
 
 namespace App\Observers;
 
-use Illuminate\Support\Facades\Log;
+use App\Models\Achievement;
+use App\Models\GameResult;
 use App\Models\Player;
 use App\Models\User;
-use App\Models\GameResult;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Achievement;
 
 class PlayerObserver
 {
@@ -18,15 +16,13 @@ class PlayerObserver
     public function created(Player $player): void
     {
         if ($player->gameOver) {
-            //Get Loged in User id
+            // Get Loged in User id
             $userId = Auth::id();
-            Log::info("Logged-in user ID: " . $userId);
 
-            //Count total wins
+            // Count total wins
             $TotalWins = GameResult::where('user_id', $userId)->where('won', 1)->count();
-            Log::info("Total Wins: " . $TotalWins);
 
-            //Count win streak
+            // Count win streak
             $results = GameResult::where('user_id', $userId)->orderBy('id')->get();
 
             $maxStreak = 0;
@@ -40,18 +36,17 @@ class PlayerObserver
                     $currentStreak = 0; // streak broken
                 }
             }
-            Log::info("Longest win streak: " . $maxStreak);
 
-            //Count all loses
+            // Count all loses
             $TotalLoses = GameResult::where('user_id', $userId)->where('won', 0)->count();
 
-            //Count all played games
+            // Count all played games
             $Totalgames = GameResult::where('user_id', $userId)->count();
 
-            //Get players Rank
+            // Get players Rank
             $rank = auth::User()->rank;
 
-            //Get user ID
+            // Get user ID
             $user = User::find($userId);
 
             $unlockedAchievements = $user->achievements()->pluck('title')->toArray();
@@ -69,17 +64,17 @@ class PlayerObserver
                 $title = $achievement->title;
 
                 if (
-                    ($title === "First Win" && $TotalWins >= 1) ||
-                    ($title === "Play 10 games" && $Totalgames >= 10) ||
-                    ($title === "Reach 50 points" && $rank >= 50) ||
-                    ($title === "Win 3 games in a row" && $maxStreak >= 3) ||
-                    ($title === "Lose 5 times" && $TotalLoses >= 5)
+                    ($title === 'First Win' && $TotalWins >= 1) ||
+                    ($title === 'Play 10 games' && $Totalgames >= 10) ||
+                    ($title === 'Reach 50 points' && $rank >= 50) ||
+                    ($title === 'Win 3 games in a row' && $maxStreak >= 3) ||
+                    ($title === 'Lose 5 times' && $TotalLoses >= 5)
                 ) {
                     $user->achievements()->attach($achievement->id);
                     $newAchievements[] = $title;
                 }
             }
-            if (!empty($newAchievements)) {
+            if (! empty($newAchievements)) {
                 $latestGame = GameResult::where('user_id', $userId)
                     ->latest()
                     ->first();
