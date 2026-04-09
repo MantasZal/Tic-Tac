@@ -1,0 +1,46 @@
+{
+  "_notyf-jshjrsWp.css": {
+    "file": "assets/notyf-jshjrsWp.css",
+    "src": "_notyf-jshjrsWp.css"
+  },
+  "_notyf.min-BkKPNi7r.js": {
+    "file": "assets/notyf.min-BkKPNi7r.js",
+    "name": "notyf.min",
+    "css": [
+      "assets/notyf-jshjrsWp.css"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-DSJwQkZC.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-B5xZr278.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/functions.js",
+      "_notyf.min-BkKPNi7r.js"
+    ]
+  },
+  "resources/js/functions.js": {
+    "file": "assets/functions-BR1pUdi6.js",
+    "name": "functions",
+    "src": "resources/js/functions.js",
+    "isEntry": true,
+    "imports": [
+      "_notyf.min-BkKPNi7r.js"
+    ]
+  },
+  "resources/js/notifications.js": {
+    "file": "assets/notifications-C027s2al.js",
+    "name": "notifications",
+    "src": "resources/js/notifications.js",
+    "isEntry": true,
+    "imports": [
+      "_notyf.min-BkKPNi7r.js"
+    ]
+  }
+}

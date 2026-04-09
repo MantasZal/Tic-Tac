@@ -13,5 +13,12 @@ export default defineConfig({
             host: "10.10.0.6", // the IP your Laravel app uses
         },
     },
-    plugins: [laravel(["resources/js/app.js", "resources/css/app.css"])],
+    plugins: [
+        laravel([
+            "resources/js/app.js",
+            "resources/js/functions.js",
+            "resources/js/notifications.js",
+            "resources/css/app.css",
+        ]),
+    ],
 });

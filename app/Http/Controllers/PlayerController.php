@@ -22,7 +22,8 @@ class PlayerController extends Controller
         $gameOver = $player?->gameOver;
         $data = $player?->data;
         $lastplayer = $player?->player;
-        $game_id = Player::orderBy('game_id', 'desc')->first()->game_id;
+        $latestGame = Player::orderBy('game_id', 'desc')->first();
+        $game_id = $latestGame?->game_id ?? 0;
 
         return view('dashboard', [
             'gameOver' => $gameOver,
