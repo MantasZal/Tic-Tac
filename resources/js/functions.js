@@ -84,8 +84,15 @@ function sendGameLogicRequest({
             if (response.gameOver) {
                 aiActive = false;
                 if (response.winner) {
-                    notyf.success("The winner is " + response.winner);
-                    notyf.success("Your new rank is " + response.new_rank);
+                    if (response.winner === "AI") {
+                        notyf.error("You lost to the AI");
+                        if (response.new_rank !== undefined) {
+                            notyf.error("Your rank dropped to " + response.new_rank);
+                        }
+                    } else {
+                        notyf.success("The winner is " + response.winner);
+                        notyf.success("Your new rank is " + response.new_rank);
+                    }
 
                     //save game results
                     var won = response.winner === "AI" ? 0 : 1;

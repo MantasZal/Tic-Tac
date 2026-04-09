@@ -8,21 +8,23 @@ use Illuminate\Support\Facades\Log;
 
 class Game
 {
-    public static function checkGameOver(SymbolEnum $aiSymbol, string $playerName, ?int $game_id, string $aiName = 'AI'): array
+    public static function checkGameOver(SymbolEnum $aiSymbol, string $playerName, ?int $game_id, string $aiName = 'AI', ?array $board = null): array
     {
-        $player = $game_id
-            ? Player::where('game_id', $game_id)->latest()->first()
-            : Player::latest()->first();
+        if (! is_array($board)) {
+            $player = $game_id
+                ? Player::where('game_id', $game_id)->latest()->first()
+                : Player::latest()->first();
 
-        if (! $player) {
-            return [
-                'gameOver' => 0,
-                'winner' => null,
-                'isDraw' => false,
-            ];
+            if (! $player) {
+                return [
+                    'gameOver' => 0,
+                    'winner' => null,
+                    'isDraw' => false,
+                ];
+            }
+
+            $board = json_decode($player->data, true);
         }
-
-        $board = json_decode($player->data, true);
 
         $wins = [
             [0, 1, 2],
@@ -38,7 +40,7 @@ class Game
         foreach ($wins as [$a, $b, $c]) {
             if ($board[$a] && $board[$a] === $board[$b] && $board[$a] === $board[$c]) {
                 $symbol = $board[$a];
-                $winner = $symbol === $aiSymbol ? $aiName : $playerName;
+                $winner = $symbol === $aiSymbol->value ? $aiName : $playerName;
 
                 return [
                     'gameOver' => true,

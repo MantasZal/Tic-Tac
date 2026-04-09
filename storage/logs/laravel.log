@@ -525,3 +525,85 @@ Please retry in 1.637844964s. at C:\\Users\\manta\\Downloads\\Tic-Tac\\vendor\\g
 [2026-04-09 13:22:04] local.INFO: game id 56  
 [2026-04-09 13:22:04] local.INFO:  $difficultyai function hard  
 [2026-04-09 13:22:04] local.INFO:   $systemPrompt function You are a master Tic-Tac-Toe strategist, trained in game theory and unbeatable logic. You always play optimally — prioritizing a win, blocking threats, and forcing draws if victory isn't possible. Whether you're X or O, you calculate every move to maximize your chances and minimize your opponent's. Never make random or suboptimal moves. Analyze the current board, assess all possibilities, and respond with the best next move, including your reasoning. Your goal is simple: never lose.  
+[2026-04-09 13:24:15] local.INFO: game id 56  
+[2026-04-09 13:24:21] local.INFO: game id 57  
+[2026-04-09 13:24:21] local.INFO:  $difficultyai function medium  
+[2026-04-09 13:24:21] local.INFO:   $systemPrompt function Block opponent wins and try to win when possible.  
+[2026-04-09 13:24:43] local.INFO: game id 58  
+[2026-04-09 13:24:43] local.INFO:  $difficultyai function medium  
+[2026-04-09 13:24:43] local.INFO:   $systemPrompt function Block opponent wins and try to win when possible.  
+[2026-04-09 13:25:42] local.INFO: game id 58  
+[2026-04-09 13:25:42] local.INFO:  $difficultyai function medium  
+[2026-04-09 13:25:42] local.INFO:   $systemPrompt function Block opponent wins and try to win when possible.  
+[2026-04-09 13:26:19] local.INFO: game id 59  
+[2026-04-09 13:26:19] local.INFO:  $difficultyai function easy  
+[2026-04-09 13:26:19] local.INFO:   $systemPrompt function Pick any valid move. Avoid occupied cells.  
+[2026-04-09 13:26:26] local.INFO: game id 59  
+[2026-04-09 13:26:26] local.INFO:  $difficultyai function easy  
+[2026-04-09 13:26:26] local.INFO:   $systemPrompt function Pick any valid move. Avoid occupied cells.  
+[2026-04-09 13:26:53] local.INFO: game id 60  
+[2026-04-09 13:26:53] local.INFO:  $difficultyai function easy  
+[2026-04-09 13:26:53] local.INFO:   $systemPrompt function Pick any valid move. Avoid occupied cells.  
+[2026-04-09 13:27:01] local.INFO: game id 60  
+[2026-04-09 13:27:01] local.INFO:  $difficultyai function easy  
+[2026-04-09 13:27:01] local.INFO:   $systemPrompt function Pick any valid move. Avoid occupied cells.  
+[2026-04-09 13:31:15] local.INFO: game id 61  
+[2026-04-09 13:31:32] local.INFO: game id 61  
+[2026-04-09 13:31:42] local.INFO: game id 61  
+[2026-04-09 13:33:16] testing.INFO: game id 0  
+[2026-04-09 13:33:21] testing.INFO: game id 0  
+[2026-04-09 13:33:25] testing.INFO: game id 0  
+[2026-04-09 13:33:29] testing.INFO: game id 0  
+[2026-04-09 13:33:34] testing.INFO: game id 0  
+[2026-04-09 13:37:29] local.INFO: game id 62  
+[2026-04-09 13:37:39] local.INFO: game id 62  
+[2026-04-09 13:37:46] local.INFO: game id 62  
+[2026-04-09 13:37:53] local.INFO: game id 62  
+[2026-04-09 13:38:26] testing.INFO: game id 0  
+[2026-04-09 13:38:26] testing.INFO: game id 0  
+[2026-04-09 13:38:26] testing.INFO: game id 0  
+[2026-04-09 13:38:26] testing.INFO: game id 0  
+[2026-04-09 13:38:26] testing.INFO: game id 0  
+[2026-04-09 13:38:45] testing.INFO: game id 0  
+[2026-04-09 13:38:45] testing.INFO: game id 0  
+[2026-04-09 13:38:45] testing.INFO: game id 0  
+[2026-04-09 13:38:45] testing.INFO: game id 0  
+[2026-04-09 13:38:45] testing.INFO: game id 0  
+[2026-04-09 13:39:40] testing.INFO: game id 0  
+[2026-04-09 13:39:41] testing.INFO: game id 0  
+[2026-04-09 13:39:41] testing.INFO: game id 0  
+[2026-04-09 13:39:41] testing.INFO: game id 0  
+[2026-04-09 13:39:41] testing.INFO: game id 0  
+[2026-04-09 13:42:26] testing.INFO: game id 0  
+[2026-04-09 13:42:26] testing.INFO: game id 0  
+[2026-04-09 13:42:26] testing.INFO: game id 0  
+[2026-04-09 13:42:26] testing.INFO: game id 0  
+[2026-04-09 13:42:26] testing.INFO: game id 0  
+[2026-04-09 13:42:44] local.INFO: game id 63  
+[2026-04-09 13:42:50] local.INFO: game id 63  
+[2026-04-09 13:42:56] local.INFO: game id 63  
+[2026-04-09 13:43:03] local.INFO: game id 63  
+[2026-04-09 13:43:09] local.INFO: game id 63  
+[2026-04-09 13:43:17] local.INFO: game id 64  
+[2026-04-09 13:43:23] local.INFO: game id 64  
+[2026-04-09 13:43:31] local.INFO: game id 64  
+[2026-04-09 13:43:46] local.INFO: game id 65  
+[2026-04-09 13:43:56] local.INFO: game id 66  
+[2026-04-09 13:44:03] local.INFO: game id 66  
+[2026-04-09 13:44:10] local.INFO: game id 66  
+[2026-04-09 13:44:17] local.INFO: game id 66  
+[2026-04-09 13:44:23] local.INFO: game id 66  
+[2026-04-09 13:45:15] local.INFO: game id 67  
+[2026-04-09 13:45:17] local.INFO: game id 67  
+[2026-04-09 13:45:18] local.INFO: game id 67  
+[2026-04-09 13:45:19] local.INFO: game id 67  
+[2026-04-09 13:45:20] local.INFO: game id 67  
+[2026-04-09 13:45:21] local.INFO: game id 67  
+[2026-04-09 13:45:32] local.INFO: game id 68  
+[2026-04-09 13:45:39] local.INFO: game id 68  
+[2026-04-09 13:45:44] local.INFO: game id 68  
+[2026-04-09 13:45:52] local.INFO: game id 68  
+[2026-04-09 13:47:16] local.INFO: game id 69  
+[2026-04-09 13:47:22] local.INFO: game id 69  
+[2026-04-09 13:47:28] local.INFO: game id 69  
+[2026-04-09 13:47:33] local.INFO: game id 69  

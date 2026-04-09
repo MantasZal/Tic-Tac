@@ -74,7 +74,7 @@ class GameController extends Controller
 
             // Checking for a winner
             $aiName = $aiEnabled ? 'AI' : 'Player 2';
-            $result = Game::checkGameOver($aiSymbol, $playerName, $game_id, $aiName);
+            $result = Game::checkGameOver($aiSymbol, $playerName, $game_id, $aiName, $board);
             $result['board'] = $board;
             if ($result['gameOver']) {
                 $change = $result['winner'] === 'AI' ? -3 : 5;
@@ -108,7 +108,7 @@ class GameController extends Controller
             $result['board'] = $board;
             $result['message'] = $AIresult['text'];
 
-            $result2 = Game::checkGameOver($aiSymbol, $playerName, $game_id);
+            $result2 = Game::checkGameOver($aiSymbol, $playerName, $game_id, 'AI', $board);
             $result2['board'] = $board;
 
             if ($result2['gameOver']) {
