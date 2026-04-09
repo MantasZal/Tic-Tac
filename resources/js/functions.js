@@ -140,8 +140,14 @@ function sendGameLogicRequest({
 
             gameOver = response.gameOver;
         },
-        error: function () {
-            alert(response.message);
+        error: function (xhr) {
+            const message =
+                xhr?.responseJSON?.error ||
+                xhr?.responseJSON?.message ||
+                "Request failed";
+            notyf.error(message);
+            $(".grid button").prop("disabled", false);
+            $("#startGame").prop("disabled", false);
         },
     });
 }

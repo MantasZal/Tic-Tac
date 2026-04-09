@@ -21,12 +21,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/api/dashboard', 'index')->name('api.dashboard');
     });
 
-    Route::controller(PlayerController::class)->group(function () {
-        Route::get('/{game_id?}', 'index')->name('dashboard');
-        Route::post('add', 'dashboard');
-        Route::post('/save_game_id', 'save_game_id');
-    });
-
     Route::controller(LeaderboardController::class)->group(function () {
         Route::get('/leaderboard', 'getLeaderBoard')->name('leaderboard');
         Route::post('/game-result', 'storeResult');
@@ -35,5 +29,11 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(AchievementsController::class)->group(function () {
         Route::get('/awardAchievement', 'awardAchievement')->name('awardAchievement');
         Route::get('/achievements', 'index')->name('achievements');
+    });
+
+    Route::controller(PlayerController::class)->group(function () {
+        Route::get('/{game_id?}', 'index')->whereNumber('game_id')->name('dashboard');
+        Route::post('add', 'dashboard');
+        Route::post('/save_game_id', 'save_game_id');
     });
 });

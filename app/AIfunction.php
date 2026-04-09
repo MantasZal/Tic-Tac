@@ -84,13 +84,19 @@ PROMPT;
         $model = config('gemini.model', 'gemini-2.0-flash');
 
         do {
-            $response = Gemini::generativeModel(model: $model)
-                ->withSystemInstruction(Content::parse($systemPrompt))
-                ->generateContent($userPrompt);
+            try {
+                $response = Gemini::generativeModel(model: $model)
+                    ->withSystemInstruction(Content::parse($systemPrompt))
+                    ->generateContent($userPrompt);
 
-            $content = $response->text();
-            $data = json_decode($content, true);
-            $move = $data['move'] ?? -1;
+                $content = $response->text();
+                $data = json_decode($content, true);
+                $move = $data['move'] ?? -1;
+            } catch (\Throwable $error) {
+                Log::error('Gemini request failed: '.$error->getMessage());
+                return ['error' => 'AI request failed'];
+            }
+
             $attempts++;
         } while (($move < 0 || $move > 8 || $board[$move] !== '') && $attempts < 8);
 

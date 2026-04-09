@@ -50,6 +50,12 @@ class GameController extends Controller
         if ($aiEnabled && ! in_array('X', $board, true) && $aiSymbol->value === 'X') {
 
             $AIresult = AIfunction::AImove($difficulty, $aiSymbol, $game_id);
+            if (isset($AIresult['error'])) {
+                return response()->json([
+                    'error' => $AIresult['error'],
+                    'board' => $board,
+                ], 503);
+            }
             $AIresult['AImove'] = $AIresult['move'] + 1;
             $board[$AIresult['move']] = $aiSymbol->value;
             $result['message'] = $AIresult['text'];
@@ -86,6 +92,12 @@ class GameController extends Controller
             }
 
             $AIresult = AIfunction::AImove($difficulty, $aiSymbol, $game_id);
+            if (isset($AIresult['error'])) {
+                return response()->json([
+                    'error' => $AIresult['error'],
+                    'board' => $board,
+                ], 503);
+            }
             $board[$AIresult['move']] = $aiSymbol->value;
             $AIresult['AImove'] = $AIresult['move'] + 1;
             $result['AImove'] = $AIresult['move'] + 1;
