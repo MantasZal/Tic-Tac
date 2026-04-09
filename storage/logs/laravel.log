@@ -630,3 +630,36 @@ Please retry in 1.637844964s. at C:\\Users\\manta\\Downloads\\Tic-Tac\\vendor\\g
 [2026-04-09 17:03:55] local.ERROR: Ollama failed: {"error":"llama runner process has terminated: %!w(\u003cnil\u003e)"}  
 [2026-04-09 17:03:59] local.INFO: game id 76  
 [2026-04-09 17:04:41] local.INFO: game id 77  
+[2026-04-09 17:38:19] local.INFO: game id 82  
+[2026-04-09 17:38:45] local.INFO: game id 82  
+[2026-04-09 17:38:50] local.INFO: game id 82  
+[2026-04-09 17:38:58] local.INFO: game id 83  
+[2026-04-09 17:39:04] local.INFO: game id 83  
+[2026-04-09 17:39:10] local.INFO: game id 83  
+[2026-04-09 17:39:19] local.INFO: game id 83  
+[2026-04-09 17:39:23] local.INFO: game id 83  
+[2026-04-09 17:39:28] local.INFO: game id 83  
+[2026-04-09 17:39:32] local.INFO: game id 84  
+[2026-04-09 17:39:38] local.INFO: game id 85  
+[2026-04-09 17:39:44] local.INFO: game id 85  
+[2026-04-09 17:39:50] local.INFO: game id 85  
+[2026-04-09 17:39:58] local.INFO: game id 85  
+[2026-04-09 17:40:09] local.INFO: game id 85  
+[2026-04-09 17:40:14] local.INFO: game id 86  
+[2026-04-09 17:40:20] local.INFO: game id 87  
+[2026-04-09 17:40:25] local.INFO: game id 87  
+[2026-04-09 17:40:31] local.INFO: game id 87  
+[2026-04-09 17:40:46] local.INFO: game id 87  
+[2026-04-09 17:43:51] local.INFO: game id 87  
+[2026-04-09 17:43:56] local.INFO: game id 89  
+[2026-04-09 17:44:34] local.INFO: game id 89  
+[2026-04-09 17:44:40] local.INFO: game id 89  
+[2026-04-09 17:46:31] local.INFO: game id 90  
+[2026-04-09 17:53:35] local.INFO: game id 91  
+[2026-04-09 17:53:42] local.ERROR: Ollama failed: {"error":"llama runner process has terminated: %!w(\u003cnil\u003e)"}  
+[2026-04-09 17:58:41] local.INFO: game id 91  
+[2026-04-09 17:59:06] local.INFO: game id 91  
+[2026-04-09 17:59:16] local.INFO: game id 91  
+[2026-04-09 17:59:23] local.INFO: Deleted players by game_id {"game_id":91,"deleted":8} 
+[2026-04-09 18:00:21] local.INFO: game id 92  
+[2026-04-09 18:00:38] local.INFO: Deleted players by game_id {"game_id":92,"deleted":2} 

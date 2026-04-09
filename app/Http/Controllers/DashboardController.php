@@ -11,10 +11,18 @@ class DashboardController extends Controller
 {
     public function save_game_results(Request $req)
     {
+        $userId = Auth::id();
+        if (! $userId) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $payload = $req->validate([
+            'won' => 'required|boolean',
+        ]);
 
         $SaveGame = new SaveGame;
-        $SaveGame->user_id = $req->playerID;
-        $SaveGame->won = $req->won;
+        $SaveGame->user_id = $userId;
+        $SaveGame->won = $payload['won'];
 
         $SaveGame->save();
     }

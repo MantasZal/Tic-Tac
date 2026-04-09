@@ -10,18 +10,36 @@ use App\Models\GameTable;
 use App\Models\Player;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class GameController extends Controller
 {
     public function gamelogic(Request $request)
     {
+        $request->validate([
+            'index' => 'required|integer|min:0|max:8',
+            'gameOver' => 'nullable|in:0,1,true,false',
+            'aisymbol' => 'sometimes|in:X,O',
+            'playerNameFromServer' => 'sometimes|string|max:50',
+            'difficulty' => 'sometimes|in:easy,medium,hard',
+            'ai_enabled' => 'sometimes|boolean',
+            'current' => 'sometimes|in:X,O',
+            'game_id' => 'sometimes|integer|min:0',
+        ]);
+
+        $userId = Auth::id();
+        if (! $userId) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
 
         $index = $request->input('index') ?? 0;
-        $gameOver = $request->gameOver ?? false;
+        $gameOver = filter_var(
+            $request->input('gameOver', false),
+            FILTER_VALIDATE_BOOLEAN
+        );
         $aiSymbol = SymbolEnum::from($request->aisymbol ?? 'O');
         $playerName = $request->input('playerNameFromServer');
-        $userId = $request->input('id') ?? 5;
         $difficulty = GameDificultyEnum::from($request->difficulty ?? 'hard');
         $aiEnabled = filter_var($request->input('ai_enabled', true), FILTER_VALIDATE_BOOL);
         $currentSymbol = SymbolEnum::from($request->input('current') ?? $aiSymbol->opposite()->value);
@@ -126,9 +144,14 @@ class GameController extends Controller
     }
     public function startGame(Request $req)
     {
+        $payload = $req->validate([
+            'starter' => 'required|in:human,ai',
+            'difficulty' => 'required|in:easy,medium,hard',
+        ]);
+
         $gametable = new GameTable;
-        $gametable->starter = $req->starter;
-        $gametable->difficulty = $req->difficulty;
+        $gametable->starter = $payload['starter'];
+        $gametable->difficulty = $payload['difficulty'];
         $gametable->save();
         $game_id = $gametable->id;
         return response()->json(['game_id' => $gametable->id]);

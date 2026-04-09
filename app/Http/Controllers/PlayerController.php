@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Player;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PlayerController extends Controller
 {
@@ -84,6 +85,11 @@ class PlayerController extends Controller
     public function deleteByGameId(int $game_id)
     {
         $deleted = Player::where('game_id', $game_id)->delete();
+
+        Log::info('Deleted players by game_id', [
+            'game_id' => $game_id,
+            'deleted' => $deleted,
+        ]);
 
         if ($deleted === 0) {
             return response()->json([
