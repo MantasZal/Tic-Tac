@@ -2,13 +2,16 @@ import { showAchievementNotification } from "./notifications";
 import { Notyf } from "notyf";
 function saveBoardState(gameOver, board, player, game_id) {
     $.ajax({
-        url: "add",
-        method: "POST",
+        url: `/api/players/${game_id}`,
+        method: "PUT",
         data: {
             gameOver: gameOver ? 1 : 0,
             data: JSON.stringify(board),
             player: player,
             game_id: game_id,
+        },
+        headers: {
+            "X-Client-Version": "web-1",
         },
         success: function (response) {
             console.log("Game state updated:", response);
@@ -48,7 +51,7 @@ function sendGameLogicRequest({
     $(".grid button").prop("disabled", true);
     $("#startGame").prop("disabled", true);
     $.ajax({
-        url: "/game-logic",
+        url: "/api/games/logic",
         method: "POST",
         data: {
             index: index,
@@ -97,7 +100,7 @@ function sendGameLogicRequest({
                     //save game results
                     var won = response.winner === "AI" ? 0 : 1;
                     $.ajax({
-                        url: "save_game_results",
+                        url: "/api/games/results",
                         method: "POST",
                         data: {
                             playerID: userId,
@@ -105,13 +108,16 @@ function sendGameLogicRequest({
                         },
                         success: function (response) {
                             $.ajax({
-                                url: "add",
-                                method: "POST",
+                                url: `/api/players/${game_id}`,
+                                method: "PUT",
                                 data: {
                                     gameOver: gameOver ? 1 : 0,
                                     data: JSON.stringify(board),
                                     player: "X",
                                     game_id: game_id,
+                                },
+                                headers: {
+                                    "X-Client-Version": "web-1",
                                 },
                                 success: function (response) {
                                     showAchievementNotification();

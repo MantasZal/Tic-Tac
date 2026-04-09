@@ -43,4 +43,57 @@ class PlayerController extends Controller
         $player->player = $req->player;
         $player->save();
     }
+
+    public function updateByGameId(Request $request, int $game_id)
+    {
+        $clientVersion = $request->header('X-Client-Version');
+        if (! $clientVersion) {
+            return response()->json([
+                'message' => 'X-Client-Version header required',
+            ], 400);
+        }
+
+        $payload = $request->validate([
+            'gameOver' => 'required|boolean',
+            'data' => 'required|string',
+            'player' => 'required|string|max:20',
+        ]);
+
+        $player = Player::where('game_id', $game_id)->latest()->first();
+        $isNew = false;
+
+        if (! $player) {
+            $player = new Player;
+            $player->game_id = $game_id;
+            $isNew = true;
+        }
+
+        $player->gameOver = $payload['gameOver'];
+        $player->data = $payload['data'];
+        $player->player = $payload['player'];
+        $player->save();
+
+        return response()->json([
+            'game_id' => $game_id,
+            'client_version' => $clientVersion,
+            'created' => $isNew,
+            'player_id' => $player->id,
+        ], $isNew ? 201 : 200);
+    }
+
+    public function deleteByGameId(int $game_id)
+    {
+        $deleted = Player::where('game_id', $game_id)->delete();
+
+        if ($deleted === 0) {
+            return response()->json([
+                'message' => 'No records found for game_id',
+            ], 404);
+        }
+
+        return response()->json([
+            'game_id' => $game_id,
+            'deleted' => $deleted,
+        ]);
+    }
 }

@@ -607,3 +607,26 @@ Please retry in 1.637844964s. at C:\\Users\\manta\\Downloads\\Tic-Tac\\vendor\\g
 [2026-04-09 13:47:22] local.INFO: game id 69  
 [2026-04-09 13:47:28] local.INFO: game id 69  
 [2026-04-09 13:47:33] local.INFO: game id 69  
+[2026-04-09 13:49:02] local.INFO: game id 69  
+[2026-04-09 13:49:06] local.INFO: game id 70  
+[2026-04-09 13:49:10] local.INFO: game id 71  
+[2026-04-09 13:49:17] local.INFO: game id 71  
+[2026-04-09 13:59:40] local.INFO: game id 72  
+[2026-04-09 13:59:53] local.INFO: game id 72  
+[2026-04-09 14:00:00] local.INFO: game id 72  
+[2026-04-09 14:00:34] local.INFO: game id 73  
+[2026-04-09 14:00:40] local.INFO: game id 73  
+[2026-04-09 14:00:47] local.INFO: game id 73  
+[2026-04-09 14:00:53] local.INFO: game id 73  
+[2026-04-09 14:02:12] local.INFO: game id 74  
+[2026-04-09 14:02:19] local.INFO: game id 74  
+[2026-04-09 14:02:25] local.INFO: game id 74  
+[2026-04-09 14:05:34] local.INFO: game id 75  
+[2026-04-09 14:05:41] local.INFO: game id 75  
+[2026-04-09 14:05:47] local.INFO: game id 75  
+[2026-04-09 17:03:39] local.INFO: game id 76  
+[2026-04-09 17:03:46] local.ERROR: Ollama failed: {"error":"llama runner process has terminated: %!w(\u003cnil\u003e)"}  
+[2026-04-09 17:03:49] local.INFO: game id 76  
+[2026-04-09 17:03:55] local.ERROR: Ollama failed: {"error":"llama runner process has terminated: %!w(\u003cnil\u003e)"}  
+[2026-04-09 17:03:59] local.INFO: game id 76  
+[2026-04-09 17:04:41] local.INFO: game id 77  

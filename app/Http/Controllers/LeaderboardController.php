@@ -34,4 +34,24 @@ class LeaderboardController extends Controller
 
         return view('leaderboard', compact('topUsers'));
     }
+
+    public function apiLeaderboard(Request $request)
+    {
+        $limit = (int) $request->query('limit', 10);
+
+        if ($limit < 1 || $limit > 50) {
+            return response()->json([
+                'message' => 'limit must be between 1 and 50',
+            ], 400);
+        }
+
+        $topUsers = User::orderBy('rank', 'desc')
+            ->limit($limit)
+            ->get(['id', 'name', 'rank']);
+
+        return response()->json([
+            'limit' => $limit,
+            'data' => $topUsers,
+        ]);
+    }
 }

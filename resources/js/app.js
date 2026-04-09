@@ -51,7 +51,7 @@ $(document).ready(function () {
         const opponent = $("#opponent").val();
         aiEnabled = opponent !== "two_player";
         $.ajax({
-            url: "/startGame",
+            url: "/api/games/start",
             method: "POST",
             data: {
                 starter: starter,
@@ -118,6 +118,18 @@ $(document).ready(function () {
     });
 
     $("#reset").click(function () {
+        if (game_id) {
+            $.ajax({
+                url: `/api/players/${game_id}`,
+                method: "DELETE",
+                success: function (response) {
+                    console.log("Game state deleted:", response);
+                },
+                error: function (xhr) {
+                    console.error("Error deleting game state:", xhr.responseText);
+                },
+            });
+        }
         playermove = false;
         aiActive = false;
         $(".grid button").text("");
