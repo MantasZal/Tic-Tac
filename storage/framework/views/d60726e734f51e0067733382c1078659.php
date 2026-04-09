@@ -40,38 +40,48 @@
 
                 
                 <div class="text-center mb-4 hidden sm:block">
-                    <label for="starter">Who starts first?</label>
-                    <select id="starter" class="ml-2 p-1 w-36 border rounded">
-                        <option value="human" selected>You</option>
-                        <option value="ai">AI</option>
-                    </select>
+                    <div class="flex flex-wrap items-center justify-center gap-4">
+                        <div class="flex items-center gap-2">
+                            <label for="starter">Who starts first?</label>
+                            <select id="starter" class="p-1 w-36 border rounded">
+                                <option value="human" selected>You</option>
+                                <option value="ai">AI</option>
+                            </select>
+                        </div>
 
-                    <label for="opponent" class="ml-4">Mode:</label>
-                    <select id="opponent" class="ml-2 p-1 w-36 border rounded">
-                        <option value="ai" selected>Vs AI</option>
-                        <option value="two_player">Two Players</option>
-                    </select>
+                        <div class="flex items-center gap-2">
+                            <label for="opponent">Mode:</label>
+                            <select id="opponent" class="p-1 w-36 border rounded">
+                                <option value="ai" selected>Vs AI</option>
+                                <option value="two_player">Two Players</option>
+                            </select>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <label for="difficulty">Difficulty:</label>
+                            <select id="difficulty" class="p-1 w-36 border rounded">
+                                <option value="easy">Easy</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <button id="startGame" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Start Game</button>
+                        </div>
+                    </div>
 
                     <?php if(!$gameOver): ?>
                         <div id="continue-wrapper" class="text-center mt-4">
                             <button id="continueGame" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Continue</button>
                         </div>
                     <?php endif; ?>
-
-                    <label for="difficulty" class="ml-4">Difficulty:</label>
-                    <select id="difficulty" class="ml-2 p-1 w-36 border rounded">
-                        <option value="easy">Easy</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="hard">Hard</option>
-                    </select>
-
-                    <button id="startGame" class="ml-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Start Game</button>
                 </div>
                 
                 <div x-data="{ showGameSettings: false }" x-cloak>
                         <?php if(!$gameOver): ?>
                             <div id="continue-wrapper-mobile" class="text-center mt-4 sm:hidden">
-                                <button id="continueGameMobile" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 w-full">
+                                <button id="continueGameMobile" class="px-5 py-2 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700">
                                     Continue
                                 </button>
                             </div>

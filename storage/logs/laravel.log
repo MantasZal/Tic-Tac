@@ -663,3 +663,7 @@ Please retry in 1.637844964s. at C:\\Users\\manta\\Downloads\\Tic-Tac\\vendor\\g
 [2026-04-09 17:59:23] local.INFO: Deleted players by game_id {"game_id":91,"deleted":8} 
 [2026-04-09 18:00:21] local.INFO: game id 92  
 [2026-04-09 18:00:38] local.INFO: Deleted players by game_id {"game_id":92,"deleted":2} 
+[2026-04-09 18:05:50] local.INFO: game id 93  
+[2026-04-09 18:05:58] local.ERROR: Ollama failed: {"error":"llama runner process has terminated: %!w(\u003cnil\u003e)"}  
+[2026-04-09 18:06:00] local.INFO: game id 93  
+[2026-04-09 18:23:39] local.INFO: game id 93  
