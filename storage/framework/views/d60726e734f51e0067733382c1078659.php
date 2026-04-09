@@ -46,6 +46,12 @@
                         <option value="ai">AI</option>
                     </select>
 
+                    <label for="opponent" class="ml-4">Mode:</label>
+                    <select id="opponent" class="ml-2 p-1 w-36 border rounded">
+                        <option value="ai" selected>Vs AI</option>
+                        <option value="two_player">Two Players</option>
+                    </select>
+
                     <?php if(!$gameOver): ?>
                         <div id="continue-wrapper" class="text-center mt-4">
                             <button id="continueGame" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Continue</button>
@@ -103,6 +109,14 @@
                                     <option value="easy">Easy</option>
                                     <option value="medium" selected>Medium</option>
                                     <option value="hard">Hard</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="mobile-opponent" class="block font-medium mb-1">Mode:</label>
+                                <select id="mobile-opponent" class="w-full p-2 border rounded">
+                                    <option value="ai" selected>Vs AI</option>
+                                    <option value="two_player">Two Players</option>
                                 </select>
                             </div>
 

@@ -27,6 +27,7 @@ function sendGameLogicRequest({
     userId,
     board,
     aiActive,
+    aiEnabled,
     game_id,
 }) {
     const notyf = new Notyf({
@@ -57,6 +58,7 @@ function sendGameLogicRequest({
             playerNameFromServer: playerName,
             id: userId,
             difficulty: difficulty,
+            ai_enabled: aiEnabled ? 1 : 0,
             // board: board,
             game_id: game_id,
         },

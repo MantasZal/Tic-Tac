@@ -23,10 +23,16 @@ class GameController extends Controller
         $playerName = $request->input('playerNameFromServer');
         $userId = $request->input('id') ?? 5;
         $difficulty = GameDificultyEnum::from($request->difficulty ?? 'hard');
-        $playerSymbol = $aiSymbol->opposite();
+        $aiEnabled = filter_var($request->input('ai_enabled', true), FILTER_VALIDATE_BOOL);
+        $currentSymbol = SymbolEnum::from($request->input('current') ?? $aiSymbol->opposite()->value);
+        $playerSymbol = $aiEnabled ? $aiSymbol->opposite() : $currentSymbol;
         $user = User::find($userId);
         $game_id = $request->game_id;
-        $board = json_decode(Player::where('game_id', $game_id)->latest()->first()->data);
+        $latestPlayer = $game_id
+            ? Player::where('game_id', $game_id)->latest()->first()
+            : Player::latest()->first();
+        $board = $latestPlayer ? json_decode($latestPlayer->data, true) : array_fill(0, 9, '');
+        $game_id = $game_id ?? ($latestPlayer?->game_id ?? 0);
 
         log::info('game id ' . $game_id);
 
@@ -41,13 +47,13 @@ class GameController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
 
-        if (! in_array('X', $board, true) && $aiSymbol->value === 'X') {
+        if ($aiEnabled && ! in_array('X', $board, true) && $aiSymbol->value === 'X') {
 
             $AIresult = AIfunction::AImove($difficulty, $aiSymbol, $game_id);
             $AIresult['AImove'] = $AIresult['move'] + 1;
             $board[$AIresult['move']] = $aiSymbol->value;
             $result['message'] = $AIresult['text'];
-            Game::savingboard($gameOver, $board, $playerSymbol);
+            Game::savingboard($gameOver, $board, $playerSymbol, $game_id);
             $AIresult['board'] = $board;
 
             return response()->json($AIresult);
@@ -58,10 +64,11 @@ class GameController extends Controller
             $board[$index] = $playerSymbol->value;
 
             // Saving board
-            Game::savingboard($gameOver, $board, $playerSymbol);
+            Game::savingboard($gameOver, $board, $playerSymbol, $game_id);
 
             // Checking for a winner
-            $result = Game::checkGameOver($aiSymbol, $playerName, $game_id);
+            $aiName = $aiEnabled ? 'AI' : 'Player 2';
+            $result = Game::checkGameOver($aiSymbol, $playerName, $game_id, $aiName);
             $result['board'] = $board;
             if ($result['gameOver']) {
                 $change = $result['winner'] === 'AI' ? -3 : 5;
@@ -74,6 +81,10 @@ class GameController extends Controller
             }
 
             // AI move
+            if (! $aiEnabled) {
+                return response()->json($result);
+            }
+
             $AIresult = AIfunction::AImove($difficulty, $aiSymbol, $game_id);
             $board[$AIresult['move']] = $aiSymbol->value;
             $AIresult['AImove'] = $AIresult['move'] + 1;
@@ -81,7 +92,7 @@ class GameController extends Controller
             $result2['AImove'] = $AIresult['move'] + 1;
 
             // Saving board
-            Game::savingboard($gameOver, $board, $aiSymbol);
+            Game::savingboard($gameOver, $board, $aiSymbol, $game_id);
             $result['board'] = $board;
             $result['message'] = $AIresult['text'];
 

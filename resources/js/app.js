@@ -4,6 +4,7 @@ window.jQuery = $;
 import "./bootstrap";
 import { saveBoardState, sendGameLogicRequest } from "./functions";
 let aiActive = true; // AI is allowed to run by default
+let aiEnabled = true;
 
 let playerName = playerNameFromServer;
 let currentname = playerName;
@@ -47,6 +48,8 @@ $(document).ready(function () {
     $("#startGame").click(function () {
         const starter = $("#starter").val();
         const difficulty = $("#difficulty").val();
+        const opponent = $("#opponent").val();
+        aiEnabled = opponent !== "two_player";
         $.ajax({
             url: "/startGame",
             method: "POST",
@@ -55,8 +58,11 @@ $(document).ready(function () {
                 difficulty: difficulty,
             },
             success: function (response) {
-                // Redirect to the new game URL using the returned game_id
-                window.location.href = `/${response.game_id}`;
+                game_id = response.game_id;
+                const nextPath = `/${response.game_id}`;
+                if (window.location.pathname !== nextPath) {
+                    window.history.replaceState({}, "", nextPath);
+                }
                 console.log("Game started:", response);
             },
             error: function (xhr) {
@@ -79,7 +85,7 @@ $(document).ready(function () {
 
         saveBoardState(gameOver, board, current, game_id);
 
-        if (starter === "ai") {
+        if (starter === "ai" && aiEnabled) {
             aiSymbol = "X";
             current = "O";
             playermove = true;
@@ -94,6 +100,7 @@ $(document).ready(function () {
                 userId,
                 board,
                 aiActive,
+                aiEnabled,
                 game_id,
             });
             $("#startGame").prop("disabled", false);
@@ -138,8 +145,13 @@ $(document).ready(function () {
             userId,
             board,
             aiActive,
+            aiEnabled,
             game_id,
         });
+
+        if (!aiEnabled) {
+            current = current === "X" ? "O" : "X";
+        }
     });
 });
 // Alpine Logic
@@ -151,10 +163,12 @@ document.addEventListener("DOMContentLoaded", () => {
     applyBtn.addEventListener("click", () => {
         const starter = document.getElementById("mobile-starter").value;
         const difficulty = document.getElementById("mobile-difficulty").value;
+        const opponent = document.getElementById("mobile-opponent").value;
 
         // Update main dropdowns
         document.getElementById("starter").value = starter;
         document.getElementById("difficulty").value = difficulty;
+        document.getElementById("opponent").value = opponent;
 
         // Start the game
         document.getElementById("startGame").click();

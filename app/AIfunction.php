@@ -28,10 +28,19 @@ class AIfunction
         return $output;
     }
 
-    public static function AImove(GameDificultyEnum $difficulty, SymbolEnum $aiSymbol, int $game_id): array
+    public static function AImove(GameDificultyEnum $difficulty, SymbolEnum $aiSymbol, ?int $game_id): array
     {
-
-        $board = json_decode(Player::where('game_id', $game_id)->latest()->first()->data);
+        $latestPlayer = $game_id
+            ? Player::where('game_id', $game_id)->latest()->first()
+            : Player::latest()->first();
+        if (! $latestPlayer) {
+            $board = array_fill(0, 9, '');
+        } else {
+            $board = json_decode($latestPlayer->data, true);
+        }
+        if (! is_array($board)) {
+            return ['error' => 'Invalid board state'];
+        }
         $boardText = self::renderBoard($board);
         log::info(' $difficultyai function ' .  $difficulty->value);
 
