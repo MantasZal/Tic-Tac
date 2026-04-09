@@ -14,10 +14,17 @@ return new class extends Migration
             $table->string('difficulty')->nullable();
             $table->timestamps();
         });
-        Schema::table('players', function (Blueprint $table) {
+        if (! Schema::hasColumn('players', 'game_id')) {
+            Schema::table('players', function (Blueprint $table) {
+                $table->unsignedBigInteger('game_id')->nullable()->after('id');
+            });
+        }
 
-            $table->unsignedBigInteger('game_id')->nullable()->after('id');
-            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
+        Schema::table('players', function (Blueprint $table) {
+            $table->foreign('game_id')
+                ->references('id')
+                ->on('games')
+                ->onDelete('cascade');
         });
     }
 

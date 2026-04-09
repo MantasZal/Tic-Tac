@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('players', function (Blueprint $table) {
-            $table->Integer('game_id',)->nullable();
-        });
+        if (! Schema::hasColumn('players', 'game_id')) {
+            Schema::table('players', function (Blueprint $table) {
+                $table->unsignedBigInteger('game_id')->nullable();
+            });
+        }
     }
 
     /**
