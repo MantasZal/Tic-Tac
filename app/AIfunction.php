@@ -5,8 +5,9 @@ namespace App;
 use App\Enums\GameDificultyEnum;
 use App\Enums\SymbolEnum;
 use App\Models\Player;
+use Gemini\Data\Content;
+use Gemini\Laravel\Facades\Gemini;
 use Illuminate\Support\Facades\Log;
-use OpenAI\Laravel\Facades\OpenAI;
 
 class AIfunction
 {
@@ -71,18 +72,14 @@ PROMPT;
         $attempts = 0;
         $move = -1;
         $data = null;
+        $model = config('gemini.model', 'gemini-2.0-flash');
 
         do {
-            $response = OpenAI::chat()->create([
-                'model' => 'gpt-4o-mini',
-                'messages' => [
-                    ['role' => 'system', 'content' => $systemPrompt],
-                    ['role' => 'user', 'content' => $userPrompt],
-                ],
+            $response = Gemini::generativeModel(model: $model)
+                ->withSystemInstruction(Content::parse($systemPrompt))
+                ->generateContent($userPrompt);
 
-            ]);
-
-            $content = $response->choices[0]->message->content;
+            $content = $response->text();
             $data = json_decode($content, true);
             $move = $data['move'] ?? -1;
             $attempts++;

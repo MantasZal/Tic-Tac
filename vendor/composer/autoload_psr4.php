@@ -94,6 +94,8 @@ return array(
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'GrahamCampbell\\ResultType\\' => array($vendorDir . '/graham-campbell/result-type/src'),
+    'Gemini\\Laravel\\' => array($vendorDir . '/google-gemini-php/laravel/src'),
+    'Gemini\\' => array($vendorDir . '/google-gemini-php/client/src'),
     'Fruitcake\\Cors\\' => array($vendorDir . '/fruitcake/php-cors/src'),
     'Fidry\\CpuCoreCounter\\' => array($vendorDir . '/fidry/cpu-core-counter/src'),
     'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
