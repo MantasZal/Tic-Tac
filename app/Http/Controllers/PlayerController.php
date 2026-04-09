@@ -16,16 +16,17 @@ class PlayerController extends Controller
         $player->save();
     }
 
-    public function index(?int $game_id = null)
+    public function index(?string $game_id = null)
     {
+        $gameId = is_numeric($game_id) ? (int) $game_id : null;
         $player = $game_id
-            ? Player::where('game_id', $game_id)->latest()->first()
+            ? Player::where('game_id', $gameId)->latest()->first()
             : Player::latest()->first();
         $gameOver = $player?->gameOver;
         $data = $player?->data;
         $lastplayer = $player?->player;
         $latestGame = Player::orderBy('game_id', 'desc')->first();
-        $game_id = $game_id ?? ($latestGame?->game_id ?? 0);
+        $game_id = $gameId ?? ($latestGame?->game_id ?? 0);
 
         return view('dashboard', [
             'gameOver' => $gameOver,
